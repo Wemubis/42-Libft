@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mle-boud <mle-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/22 17:42:48 by mle-boud          #+#    #+#             */
-/*   Updated: 2023/04/29 23:30:55 by mle-boud         ###   ########.fr       */
+/*   Created: 2023/04/04 18:36:21 by mleboudec         #+#    #+#             */
+/*   Updated: 2023/04/04 20:18:13 by mle-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-int	ft_strcmp(const char *s1, const char *s2)
+static int	smallest(int actual, int new)
 {
-	size_t	i;
+	if (actual < new)
+		return (actual);
+	return (new);
+}
 
-	i = 0;
-	while (s1[i] && s2[i] && s1[i] == s2[i])
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+void	*ft_realloc(void *ptr, size_t actual_size, size_t new_size)
+{
+	void	*newptr;
+	int		size;
+
+	size = smallest(actual_size, new_size);
+	newptr = malloc(size);
+	newptr = ft_memcpy(newptr, ptr, size);
+	free(ptr);
+	return (newptr);
 }

@@ -1,62 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mle-boud <mle-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/11 15:17:29 by mle-boud          #+#    #+#             */
-/*   Updated: 2022/11/15 15:21:38 by mle-boud         ###   ########.fr       */
+/*   Created: 2022/11/28 13:35:34 by mle-boud          #+#    #+#             */
+/*   Updated: 2022/11/29 13:42:32 by mle-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-static int	len_nb(long n)
+static long	len_nb(int n)
 {
-	int	len;
+	long	len;
 
-	len = 0;
-	if (n == 0)
-		len++;
-	if (n < 0)
+	len = 1;
+	n /= 10;
+	while (n)
 	{
-		n *= -1;
-		len++;
-	}
-	while (n > 0)
-	{
+		len *= 10;
 		n /= 10;
-		len++;
 	}
 	return (len);
 }
 
-char	*ft_itoa(int n)
+int	ft_putnbr_dprintf(int n, int fd)
 {
-	char	*dst;
 	long	nb;
 	int		len;
+	int		ret;
 
+	len = len_nb(n);
 	nb = n;
-	len = len_nb(nb);
-	dst = malloc(sizeof(char) * (len + 1));
-	if (!dst)
-		return (NULL);
+	ret = 0;
 	if (nb == 0)
-		dst[0] = '0';
+		return (write(fd, "0", 1));
 	if (nb < 0)
 	{
 		nb *= -1;
-		dst[0] = '-';
+		ret += write(fd, "-", 1);
 	}
-	dst[len] = '\0';
-	if (nb > 0)
-		len--;
-	while (nb > 0)
+	while (len)
 	{
-		dst[len--] = nb % 10 + '0';
-		nb /= 10;
+		ft_putchar_fd(nb / len + '0', fd);
+		nb %= len;
+		len /= 10;
+		ret++;
 	}
-	return (dst);
+	return (ret);
 }

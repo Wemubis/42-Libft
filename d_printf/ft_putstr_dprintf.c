@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstsize.c                                       :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mle-boud <mle-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/16 15:38:23 by mle-boud          #+#    #+#             */
-/*   Updated: 2022/11/16 16:13:29 by mle-boud         ###   ########.fr       */
+/*   Created: 2022/11/29 13:25:06 by mle-boud          #+#    #+#             */
+/*   Updated: 2022/11/29 13:52:48 by mle-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-int	ft_lstsize(t_list *lst)
+int	ft_putstr_dprintf(char *s, int fd)
 {
-	int	x;
-
-	x = 0;
-	while (lst)
-	{
-		lst = lst->next;
-		x++;
-	}
-	return (x);
+	if (!s)
+		return (write(fd, "(null)", 6));
+	return (write(fd, s, ft_strlen(s)));
 }

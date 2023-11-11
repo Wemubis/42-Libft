@@ -14,6 +14,7 @@
 # define LIBFT_H
 
 # define BUFFER_SIZE 256
+# define EOF -1
 
 /*			Text Color			*/
 # define BLACK   "\033[30m"
@@ -36,10 +37,10 @@
 /*			Underline			*/
 # define U       "\033[4m"
 # define U_OFF   "\033[24m"
-/*			Bold			*/
+/*			Bold				*/
 # define B       "\033[1m"
 # define B_OFF   "\033[22m"
-/*			Italic			*/
+/*			Italic				*/
 # define I       "\033[3m"
 # define I_OFF   "\033[23m"
 
@@ -60,6 +61,14 @@ int		ft_putnbr_unsigned_printf(unsigned int n);
 int		ft_ptr_b_printf(void *n, char *base);
 int		ft_putstr_printf(char *s);
 
+/*---------------D-PRINTF---------------*/
+int		ft_dprintf(int fd, const char *format, ...);
+int		ft_putnbr_dprintf(int n, int fd);
+int		ft_b_dprtf(long nb, char *base, int fd);
+int		ft_putnbr_unsigned_dprintf(unsigned int n, int fd);
+int		ft_pb_dprtf(void *n, char *base, int fd);
+int		ft_putstr_dprintf(char *s, int fd);
+
 /*-----------------GNL----------------*/
 char	*get_next_line(int fd);
 size_t	gnl_strlen(char *str);
@@ -74,6 +83,7 @@ int		ft_isalpha(int c);
 int		ft_isascii(int c);
 int		ft_isdigit(int c);
 int		ft_isprint(int c);
+int		ft_isspace(char c);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
 
@@ -88,6 +98,7 @@ void	*ft_memset(void *b, int c, size_t len);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t size);
 char	ft_find_char(const char *s, int c);
+void	*ft_realloc(void *ptr, size_t actual_size, size_t new_size);
 char	**ft_split(char const *s, char c);
 char	*ft_strcat(char *s1, char const *s2);
 char	*ft_strchr(const char *s, int c);
@@ -110,7 +121,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_atoi(const char *str);
 char	*ft_itoa(int n);
 int		ft_putchar(int c);
-void	ft_putchar_fd(char c, int fd);
+int		ft_putchar_fd(char c, int fd);
 void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr(int n);
 void	ft_putnbr_fd(int n, int fd);

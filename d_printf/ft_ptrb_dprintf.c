@@ -1,49 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr.c                                        :+:      :+:    :+:   */
+/*   ft_putptr_base.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mle-boud <mle-boud@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/11 19:35:58 by mle-boud          #+#    #+#             */
-/*   Updated: 2022/12/11 19:35:58 by mle-boud         ###   ########.fr       */
+/*   Created: 2022/11/28 15:13:12 by mle-boud          #+#    #+#             */
+/*   Updated: 2022/11/29 16:24:50 by mle-boud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 
-static long	ft_length(long nb)
+static size_t	ft_length_nbr(uintptr_t nb, int len_b)
 {
-	long	len;
+	long	l;
 
-	len = 1;
-	nb /= 10;
+	l = 1;
+	nb /= len_b;
 	while (nb)
 	{
-		nb /= 10;
-		len *= 10;
+		nb /= len_b;
+		l *= len_b;
 	}
-	return (len);
+	return (l);
 }
 
-void	ft_putnbr(int n)
+int	ft_pb_dprtf(void *n, char *base, int fd)
 {
-	long	len;
-	long	nb;
+	size_t		len;
+	int			len_b;
+	int			ret;
+	uintptr_t	nb;
 
-	nb = n;
-	len = ft_length(nb);
+	nb = (uintptr_t)n;
+	len_b = ft_strlen(base);
+	len = ft_length_nbr(nb, len_b);
+	ret = 0;
 	if (nb == 0)
-		write(1, "0", 1);
-	if (nb < 0)
-	{
-		nb *= -1;
-		write(1, "-", 1);
-	}
+		return (write(fd, "0", 1));
 	while (len)
 	{
-		ft_putchar(nb / len + 48);
+		ft_putchar_fd(base[nb / len], fd);
 		nb %= len;
-		len /= 10;
+		len /= len_b;
+		ret++;
 	}
+	return (ret);
 }

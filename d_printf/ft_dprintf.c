@@ -12,30 +12,30 @@
 
 #include "../libft.h"
 
-static int	ft_conversion(va_list arg, char format)
+static int	ft_conversion(va_list arg, char format, int fd)
 {
 	if (format == 'c')
-		return (ft_putchar(va_arg(arg, int)));
+		return (ft_putchar_fd(va_arg(arg, int), fd));
 	if (format == 's')
-		return (ft_putstr_printf(va_arg(arg, char *)));
+		return (ft_putstr_dprintf(va_arg(arg, char *), fd));
 	if (format == 'p')
 	{
 		write(1, "0x", 2);
-		return (ft_ptr_b_printf(va_arg(arg, void *), "0123456789abcdef") + 2);
+		return (ft_pb_dprtf(va_arg(arg, void *), "0123456789abcdef", fd) + 2);
 	}
 	if (format == 'd' || format == 'i')
-		return (ft_putnbr_printf(va_arg(arg, int)));
+		return (ft_putnbr_dprintf(va_arg(arg, int), fd));
 	if (format == 'u')
-		return (ft_putnbr_unsigned_printf(va_arg(arg, unsigned int)));
+		return (ft_putnbr_unsigned_dprintf(va_arg(arg, unsigned int), fd));
 	if (format == 'x')
-		return (ft_nbr_b_printf(va_arg(arg, unsigned int), "0123456789abcdef"));
+		return (ft_b_dprtf(va_arg(arg, unsigned int), "0123456789abcdef", fd));
 	if (format == 'X')
-		return (ft_nbr_b_printf(va_arg(arg, unsigned int), "0123456789ABCDEF"));
+		return (ft_b_dprtf(va_arg(arg, unsigned int), "0123456789ABCDEF", fd));
 	else
 		return (write(1, &format, 1));
 }
 
-int	ft_printf(const char *format, ...)
+int	ft_dprintf(int fd, const char *format, ...)
 {
 	va_list	arg;
 	int		ret;
@@ -43,7 +43,7 @@ int	ft_printf(const char *format, ...)
 
 	if (!format)
 		return (0);
-	if (write(1, NULL, 0) < 0)
+	if (write(fd, NULL, 0) < 0)
 		return (-1);
 	va_start(arg, format);
 	ret = 0;
@@ -53,9 +53,9 @@ int	ft_printf(const char *format, ...)
 		if (format[i] == '%' && !format[i + 1])
 			break ;
 		else if (format[i] == '%')
-			ret += ft_conversion(arg, format[++i]);
+			ret += ft_conversion(arg, format[++i], fd);
 		else
-			ret += write(1, &format[i], 1);
+			ret += write(fd, &format[i], 1);
 	}
 	va_end(arg);
 	return (ret);
