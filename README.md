@@ -70,7 +70,7 @@ Les couleurs disponibles sont : `BLACK`, `RED`, `GREEN`, `YELLOW`, `BLUE`, `PURP
 ### 1. Clonez le Dépôt :
 
 ```bash
-git clone <lien_du_dépôt>
+git clone https://github.com/Wemubis/Libft.git
 ```
 
 ### 2. Compilation de la bibliothèque :
