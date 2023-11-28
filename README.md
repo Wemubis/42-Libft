@@ -94,7 +94,7 @@ int main() {
     ft_lstadd_front(&list, ft_lstnew("Ecole"));
 
     // Utilisation de ft_printf avec couleur
-    ft_printf("{CYAN}Nombre : %d, Chaîne : %s{RESET}\n", 42, "libft");
+    ft_printf("%sNombre : %d, Chaîne : %s%s\n", CYAN, 42, "libft", COLOR_OFF);
 
     return 0;
 }
